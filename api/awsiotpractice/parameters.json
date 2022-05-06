@@ -1,0 +1,12 @@
+{
+  "AppSyncApiName": "awsiotpractice",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authawsiotpractice62543e8a",
+      "Outputs.UserPoolId"
+    ]
+  },
+  "AuthModeLastUpdated": "2022-04-20T12:58:48.698Z"
+}

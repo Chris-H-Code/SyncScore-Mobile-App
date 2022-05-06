@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "awsiotpractice",
+    "serviceName": "AppSync",
+    "gqlSchemaPath": "/Users/christopherhichez/Desktop/JSProjects/AWSIoTPractice_/amplify/backend/api/awsiotpractice/schema.graphql",
+    "defaultAuthType": {
+      "mode": "AMAZON_COGNITO_USER_POOLS",
+      "cognitoUserPoolId": "authawsiotpractice62543e8a"
+    },
+    "conflictResolution": {},
+    "additionalAuthTypes": [
+      {
+        "mode": "API_KEY",
+        "expirationTime": 7,
+        "apiKeyExpirationDate": "2022-04-27T12:58:47.409Z",
+        "keyDescription": "da2-4oxp453rhna6jlp3y3jcu62ygy"
+      }
+    ]
+  }
+}

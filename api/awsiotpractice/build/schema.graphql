@@ -1,0 +1,240 @@
+
+type User {
+  id: ID!
+  email: String!
+  imageUri: String
+  wins: Int
+  losses: Int
+  score: Int
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type SyncScoreSensor @aws_api_key @aws_cognito_user_pools {
+  id: String!
+  sensorId: String!
+  redScore: String
+  blueScore: String
+  date: String
+  timestamp: String
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelUserConnection {
+  items: [User]!
+  nextToken: String
+}
+
+input ModelUserFilterInput {
+  id: ModelIDInput
+  email: ModelStringInput
+  imageUri: ModelStringInput
+  wins: ModelIntInput
+  losses: ModelIntInput
+  score: ModelIntInput
+  and: [ModelUserFilterInput]
+  or: [ModelUserFilterInput]
+  not: ModelUserFilterInput
+}
+
+type Query {
+  getUser(id: ID!): User
+  listUsers(filter: ModelUserFilterInput, limit: Int, nextToken: String): ModelUserConnection
+  getSyncScoreSensor(id: ID!): SyncScoreSensor @aws_api_key @aws_cognito_user_pools
+  listSyncScoreSensors(filter: ModelSyncScoreSensorFilterInput, limit: Int, nextToken: String): ModelSyncScoreSensorConnection @aws_api_key @aws_cognito_user_pools
+}
+
+input ModelUserConditionInput {
+  email: ModelStringInput
+  imageUri: ModelStringInput
+  wins: ModelIntInput
+  losses: ModelIntInput
+  score: ModelIntInput
+  and: [ModelUserConditionInput]
+  or: [ModelUserConditionInput]
+  not: ModelUserConditionInput
+}
+
+input CreateUserInput {
+  id: ID
+  email: String!
+  imageUri: String
+  wins: Int
+  losses: Int
+  score: Int
+}
+
+input UpdateUserInput {
+  id: ID!
+  email: String
+  imageUri: String
+  wins: Int
+  losses: Int
+  score: Int
+}
+
+input DeleteUserInput {
+  id: ID!
+}
+
+type Mutation {
+  createUser(input: CreateUserInput!, condition: ModelUserConditionInput): User
+  updateUser(input: UpdateUserInput!, condition: ModelUserConditionInput): User
+  deleteUser(input: DeleteUserInput!, condition: ModelUserConditionInput): User
+  createSyncScoreSensor(input: CreateSyncScoreSensorInput!, condition: ModelSyncScoreSensorConditionInput): SyncScoreSensor @aws_api_key
+  updateSyncScoreSensor(input: UpdateSyncScoreSensorInput!, condition: ModelSyncScoreSensorConditionInput): SyncScoreSensor @aws_api_key
+  deleteSyncScoreSensor(input: DeleteSyncScoreSensorInput!, condition: ModelSyncScoreSensorConditionInput): SyncScoreSensor @aws_api_key
+}
+
+type Subscription {
+  onCreateUser(id: String): User @aws_subscribe(mutations: ["createUser"])
+  onUpdateUser(id: String): User @aws_subscribe(mutations: ["updateUser"])
+  onDeleteUser(id: String): User @aws_subscribe(mutations: ["deleteUser"])
+  onCreateSyncScoreSensor: SyncScoreSensor @aws_subscribe(mutations: ["createSyncScoreSensor"]) @aws_api_key @aws_cognito_user_pools
+  onUpdateSyncScoreSensor: SyncScoreSensor @aws_subscribe(mutations: ["updateSyncScoreSensor"]) @aws_api_key @aws_cognito_user_pools
+  onDeleteSyncScoreSensor: SyncScoreSensor @aws_subscribe(mutations: ["deleteSyncScoreSensor"]) @aws_api_key @aws_cognito_user_pools
+}
+
+type ModelSyncScoreSensorConnection @aws_api_key @aws_cognito_user_pools {
+  items: [SyncScoreSensor]!
+  nextToken: String
+}
+
+input ModelSyncScoreSensorFilterInput {
+  id: ModelStringInput
+  sensorId: ModelStringInput
+  redScore: ModelStringInput
+  blueScore: ModelStringInput
+  date: ModelStringInput
+  timestamp: ModelStringInput
+  and: [ModelSyncScoreSensorFilterInput]
+  or: [ModelSyncScoreSensorFilterInput]
+  not: ModelSyncScoreSensorFilterInput
+}
+
+input ModelSyncScoreSensorConditionInput {
+  id: ModelStringInput
+  sensorId: ModelStringInput
+  redScore: ModelStringInput
+  blueScore: ModelStringInput
+  date: ModelStringInput
+  timestamp: ModelStringInput
+  and: [ModelSyncScoreSensorConditionInput]
+  or: [ModelSyncScoreSensorConditionInput]
+  not: ModelSyncScoreSensorConditionInput
+}
+
+input CreateSyncScoreSensorInput {
+  id: String
+  sensorId: String!
+  redScore: String
+  blueScore: String
+  date: String
+  timestamp: String
+}
+
+input UpdateSyncScoreSensorInput {
+  id: String!
+  sensorId: String
+  redScore: String
+  blueScore: String
+  date: String
+  timestamp: String
+}
+
+input DeleteSyncScoreSensorInput {
+  id: ID!
+}
+

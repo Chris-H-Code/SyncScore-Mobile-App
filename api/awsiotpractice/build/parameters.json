@@ -1,0 +1,13 @@
+{
+    "AppSyncApiName": "awsiotpractice",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authawsiotpractice62543e8a",
+            "Outputs.UserPoolId"
+        ]
+    },
+    "S3DeploymentBucket": "amplify-awsiotpractice-dev-203239-deployment",
+    "S3DeploymentRootKey": "amplify-appsync-files/59e023bff8533b1baaff8da5cf289ae8c57d8f96"
+}
